@@ -30,7 +30,8 @@ function render(s,time){const {c,parent,ctx:g}=s;let w=parent.clientWidth,h=pare
  g.globalAlpha=1;
 }
 function tick(now){if(document.hidden||reduced()){frame=0;return;}if(now-last>40){last=now;scenes=scenes.filter(s=>s.c.isConnected);for(const s of scenes)render(s,now/1000);}frame=requestAnimationFrame(tick);}
-new MutationObserver(attach).observe(document.querySelector('#app'),{childList:true,subtree:true});
+function watchScene(){const surface=document.getElementById('app');if(surface)new MutationObserver(attach).observe(surface,{childList:true,subtree:true});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watchScene,{once:true});else watchScene();
 document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;}else attach();});
 matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',()=>{if(reduced()){cancelAnimationFrame(frame);frame=0;for(const s of scenes)s.ctx.clearRect(0,0,s.c.width,s.c.height);}else attach();});
 attach();
