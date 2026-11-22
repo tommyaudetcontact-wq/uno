@@ -1,4 +1,4 @@
-import {room,start,action,view,log} from './engine.js?v=4';
+import {room,start,action,view,log} from './engine.js?v=5';
 
 // Étoile WebRTC : l'écran partagé est l'autorité, chaque téléphone est un pair.
 // PeerServer Cloud ne transporte que la signalisation. Pas de backend applicatif.
@@ -12,7 +12,7 @@ function persist(){if(game)sessionStorage.setItem('nova-host-'+game.code,JSON.st
 function publish(){persist();latest=game?view(game,game.host):latest;if(onView&&game)onView(latest);for(const [token,c]of clients)if(c.open)c.send({kind:'state',state:view(game,token)});}
 function hostAction(token,a){if(!game||a.room!==game.code)throw Error('Partie introuvable.');
   if(a.type==='start'){if(token!==game.host)throw Error('Réservé à l’hôte.');if(game.status==='playing')throw Error('La manche est déjà en cours.');start(game);}
-  else if(a.type==='rules'){if(token!==game.host||game.status==='playing')throw Error('Réglages verrouillés.');for(const k of ['jump','stack','drawUntil'])game.rules[k]=!!a.rules?.[k];}
+  else if(a.type==='rules'){if(token!==game.host||game.status==='playing')throw Error('Réglages verrouillés.');for(const k of ['jump','stack','drawUntil','challenge'])game.rules[k]=!!a.rules?.[k];}
   else if(a.type==='remove'){if(token!==game.host||game.status==='playing')throw Error('Impossible maintenant.');let p=game.players.find(x=>x.id===a.player);if(p){clients.get(p.token)?.send({kind:'removed'});clients.get(p.token)?.close();clients.delete(p.token);}game.players=game.players.filter(x=>x.id!==a.player);}
   else {let p=game.players.find(x=>x.token===token);if(!p)throw Error('Session invalide.');action(game,p,a);}
   publish();return {ok:true};

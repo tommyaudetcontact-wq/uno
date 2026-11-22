@@ -68,3 +68,5 @@ Présentation et retours visuels étudiés à partir du gameplay Ubisoft : https
 Canvas additif : particules lumineuses à traînées, sprites de halo, ondes concentriques, arcs électriques et vortex sur les cartes spéciales; supernovas et feux cosmiques sur NOVA et la victoire. La boucle s’arrête quand les effets sont finis et quand l’onglet est masqué. Densité et résolution limitées sur mobile; préférence de réduction des animations respectée. Les effets ne bloquent aucun contrôle.
 
 Le décor illustré conserve son image originale; des couches Canvas ajoutent vaisseaux à propulsion turquoise, étoiles filantes et scintillements lents. Ces éléments restent derrière les cartes. Ils s’arrêtent dans les onglets masqués et respectent la réduction des animations.
+
+L’hôte peut activer ou désactiver « Contester les +4 » avant le départ et entre les manches. Désactivé : aucun bouton de contestation, pas de bluff; un +4 est bloqué si son auteur possède la couleur active. Le joueur ciblé pioche quatre et passe.

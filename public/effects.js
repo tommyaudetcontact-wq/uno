@@ -1,4 +1,4 @@
-import {cosmicBurst} from './vfx.js?v=4';
+import {cosmicBurst} from './vfx.js?v=5';
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 const box=e=>e?.getBoundingClientRect();
 export function captureScene(s){if(!s)return {};return {deck:box(document.querySelector('.arena .pile:first-child .card')),top:box(document.querySelector('.arena .pile:last-child .card')),hand:Object.fromEntries([...document.querySelectorAll('[data-card]')].map(e=>[e.dataset.card,box(e)]))};}
