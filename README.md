@@ -81,3 +81,7 @@ Le hamburger en haut à droite ouvre les commandes hôte. Le fil de partie est m
 La couleur active se reflète dans la lumière de la planète, les cristaux et les plateformes du décor, y compris après une faille cosmique. Les 16 portraits originaux (explorateurs, robots, princesses et créatures) sont intégrés dans `public/avatars.png`, générés avec ImageGen intégré. Aucun personnage de franchise n’a été repris.
 
 Dans le menu hamburger, l’hôte peut terminer la partie : tous les appareils reviennent au salon, les mains et les scores sont remis à zéro, sans gagnant. Les joueurs, avatars, connexions et règles restent disponibles pour relancer une partie. Seul le jeton hôte autorise cette action.
+
+## Musique
+
+Arcade Rush et Quantum Dash, fichiers fournis par l’utilisateur, sont inclus dans `public/music/`. Le bouton ♬ ouvre le lecteur dans l’accueil et le salon; le menu hôte contient les mêmes commandes en partie. Lecture/pause, piste et volume sont réglables. Les deux morceaux s’enchaînent en boucle. La musique continue pendant les changements de vue, sur cet appareil uniquement; elle ne démarre pas automatiquement sur les téléphones. Le navigateur peut demander une première action sur Écouter.

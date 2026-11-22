@@ -1,4 +1,4 @@
-import {room,start,end,action,view,log} from './engine.js?v=11';
+import {room,start,end,action,view,log} from './engine.js?v=12';
 
 // Étoile WebRTC : l'écran partagé est l'autorité, chaque téléphone est un pair.
 // PeerServer Cloud ne transporte que la signalisation. Pas de backend applicatif.
