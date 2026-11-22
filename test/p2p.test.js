@@ -7,9 +7,9 @@ globalThis.Peer=FakePeer;globalThis.window={addEventListener(){}};const data=new
 test('transport P2P : rejoindre, vues privées, autorité et reconnexion',async()=>{
  let host=(await import('../public/transport.js?host')).transport,guest=(await import('../public/transport.js?guest')).transport,other=(await import('../public/transport.js?other')).transport;
  let h=await host.request('create',{}),hs,gs,os;let sub=host.subscribe(h,s=>hs=s,()=>{});
- let a=await guest.request('join',{room:h.code,name:'Alice',avatar:0});let sa=guest.subscribe(a,s=>gs=s,()=>{});
+ let a=await guest.request('join',{room:h.code,name:'Alice',avatar:15});let sa=guest.subscribe(a,s=>gs=s,()=>{});
  let b=await other.request('join',{room:h.code,name:'Bob',avatar:1});let sb=other.subscribe(b,s=>os=s,()=>{});
- const tick=()=>new Promise(r=>setImmediate(r));await tick();assert.equal(hs.players.length,2);assert.equal(gs.me,hs.players[0].id);assert.equal(os.me,hs.players[1].id);
+ const tick=()=>new Promise(r=>setImmediate(r));await tick();assert.equal(hs.players.length,2);assert.equal(hs.players[0].avatar,15);assert.equal(gs.me,hs.players[0].id);assert.equal(os.me,hs.players[1].id);
  await assert.rejects(guest.request('action',{room:h.code,type:'start'},a));
  await host.request('action',{room:h.code,type:'start'},h);await tick();assert.equal(hs.hand.length,0);assert.ok(gs.hand.length>=7);assert.ok(os.hand.length>=7);assert.equal(gs.players[1].hand,undefined);assert.notDeepEqual(gs.hand,os.hand);
  assert.equal(JSON.stringify(gs).includes(b.token),false);assert.equal(gs.host,false);assert.equal(hs.host,true);

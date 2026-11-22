@@ -70,3 +70,12 @@ Canvas additif : particules lumineuses à traînées, sprites de halo, ondes con
 Le décor illustré conserve son image originale; des couches Canvas ajoutent vaisseaux à propulsion turquoise, étoiles filantes et scintillements lents. Ces éléments restent derrière les cartes. Ils s’arrêtent dans les onglets masqués et respectent la réduction des animations.
 
 L’hôte peut activer ou désactiver « Contester les +4 » avant le départ et entre les manches. Désactivé : aucun bouton de contestation, pas de bluff; un +4 est bloqué si son auteur possède la couleur active. Le joueur ciblé pioche quatre et passe.
+
+
+## Interface arène (version 6)
+
+Pendant la manche, l’hôte affiche une arène qui remplit toute la fenêtre : avatars autour de la table, compteurs de mains, joueur actif lumineux, pioche et défausse empilée. Aucune face de carte privée n’est rendue sur l’hôte. Une couronne de flèches tourne dans le sens actuel. Les cartes piochées et la distribution voyagent de la pioche aux portraits; les cartes jouées rejoignent la pile centrale.
+
+Le hamburger en haut à droite ouvre les commandes hôte. Le fil de partie est masqué par défaut, activable dans ce menu; son affichage ne concerne que cet écran. Le plein écran du navigateur reste une action disponible dans le menu. Sur téléphone, seule la main personnelle apparaît en éventail; les adversaires sont représentés par leur avatar et un compteur.
+
+La couleur active se reflète dans la lumière de la planète, les cristaux et les plateformes du décor, y compris après une faille cosmique. Les 16 portraits originaux (explorateurs, robots, princesses et créatures) sont intégrés dans `public/avatars.png`, générés avec ImageGen intégré. Aucun personnage de franchise n’a été repris.
