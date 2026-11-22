@@ -22,4 +22,6 @@ body.in-game{overflow:hidden}body.in-game>header{display:none}body.in-game main{
 
 .large-party .seat.compact-side{width:135px;display:grid;grid-template-columns:38px 1fr;column-gap:7px;align-items:center;text-align:left}.large-party .compact-side .seat-portrait{grid-column:1;grid-row:1/3;width:36px;height:36px;margin:0}.large-party .compact-side strong{grid-column:2;font-size:.875rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:18px}.large-party .compact-side .seat-status{grid-column:2;margin-top:2px;font-size:.5rem}.large-party .compact-side .seat-count{min-width:20px;height:20px;font-size:.8rem;right:-8px;padding:2px}.large-party .compact-side .portrait{border-radius:11px}.crystal{clip-path:none;border-radius:50%;background:radial-gradient(ellipse,var(--active),transparent 72%);mix-blend-mode:color;opacity:.85;filter:blur(8px)}.crystal-left{left:0;bottom:10%;width:12vw;height:25vh}.crystal-right{right:0;top:auto;bottom:16%;width:12vw;height:25vh}
 
-.host-stage .table-color{left:68%;top:61%;transform:translate(-50%,-50%)}.host-stage .crystal{background:url('arena.png') center/cover fixed;mask-image:radial-gradient(ellipse,#000 25%,transparent 75%);mix-blend-mode:normal;opacity:.95;filter:hue-rotate(var(--world-hue,235deg)) saturate(1.6) brightness(1.1);border-radius:0;transition:filter .8s}
+.host-stage .table-color{left:68%;top:61%;transform:translate(-50%,-50%)}
+
+.host-stage .crystal{display:none}.world-colors{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.9}
