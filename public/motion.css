@@ -1,0 +1,6 @@
+@keyframes deal-in{from{opacity:0;transform:translate(55px,-50px) rotate(25deg) scale(.7)}70%{transform:translate(-5px,4px) rotate(-5deg)}to{opacity:1;transform:none}}
+@keyframes turn-glow{50%{box-shadow:0 0 30px #c8fa6933}}
+.arena .pile:last-child .card{animation:deal-in .5s cubic-bezier(.2,.7,.3,1)}
+.player.active{animation:turn-glow 2.5s ease-in-out infinite}
+.hero-art .card{transition:filter .3s}.hero-art:hover .card{filter:brightness(1.1)}
+@media(prefers-reduced-motion:reduce){.arena .pile:last-child .card,.player.active{animation:none}}

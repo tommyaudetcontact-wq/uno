@@ -1,59 +1,58 @@
 # NOVA! — Chaos en orbite
 
-Jeu de cartes web multijoueur en français, pour 2 à 10 personnes. L’écran de l’hôte affiche la table et le fil de partie. Chaque joueur scanne le QR et garde sa main sur son téléphone.
+Jeu de cartes multijoueur en français, 2 à 10 joueurs. **100 % statique, hébergé sur GitHub Pages. Aucun serveur Node.js à installer ou déployer.** L’écran partagé est l’hôte WebRTC; les téléphones sont ses pairs.
 
-## Jouer tout de suite en local
+## Publier sur GitHub Pages
 
-Installer Node.js 20 ou plus, puis depuis ce dossier :
+Le workflow `.github/workflows/pages.yml` publie automatiquement `public/` après chaque push sur `main`.
 
-```sh
-node server.js
-```
+Dans le dépôt : **Settings → Pages → Source : GitHub Actions**. Le site sera accessible à https://tommyaudetcontact-wq.github.io/uno/ après le déploiement réussi.
 
-Aucune dépendance à installer. Ouvrir **l’adresse réseau affichée dans le terminal**, par exemple `http://192.168.0.199:3000`, sur l’écran partagé. Créer une partie; les téléphones, sur le même Wi-Fi, scannent le QR. Au moins deux joueurs doivent rejoindre avant de lancer. Autoriser Node sur le réseau privé si Windows le demande. Ne pas ouvrir l’écran partagé avec `localhost` pour générer un QR destiné aux téléphones.
+Aucune variable d’environnement, base de données, clé API ou commande de build. Les fichiers de jeu sont tous dans `public/`. Node n’est utilisé qu’en développement pour les tests automatisés, jamais par le site.
 
-## Hébergement Internet recommandé
+## Jouer
 
-Le dépôt GitHub contient tout le jeu. Un hébergeur **Node persistant** est nécessaire : GitHub Pages seul ne peut pas synchroniser les mains et les tours.
+1. Ouvrir le site sur la télé ou l’ordinateur et choisir « Créer une partie ».
+2. Chaque joueur scanne le QR avec son téléphone, choisit son pseudo et son avatar.
+3. L’hôte lance la manche. Les téléphones affichent leur main; l’écran partagé affiche les cartes jouées, les compteurs et le fil d’actions.
+4. Garder l’écran hôte allumé et ouvert pendant la partie. Utiliser un appareil ou profil de navigateur distinct par joueur.
 
-- Sur Render, créer un Blueprint depuis ce dépôt (`render.yaml` fourni), ou un Web Service Node avec `node --check server.js` comme commande de build et `node server.js` comme commande de démarrage.
-- Le serveur utilise `PORT` de l’hébergeur, écoute sur `0.0.0.0` et sert aussi l’interface. Ouvrir son URL HTTPS : le QR utilisera automatiquement cette URL. Aucun secret ni clé API nécessaire.
-- Un Dockerfile est fourni pour un autre hébergeur. Le reverse proxy doit autoriser les connexions SSE et désactiver leur buffering.
-- Un seul processus / une seule instance : les salons sont en mémoire. Un redémarrage efface les parties. Un service qui se met en veille n’est pas adapté à une soirée ininterrompue; choisir sa formule en conséquence.
+Pour un aperçu local, servir `public/` avec n’importe quel serveur de fichiers statiques, par exemple `python -m http.server 3000 --directory public`, puis ouvrir `http://localhost:3000`. Les téléphones doivent utiliser l’URL HTTPS de GitHub Pages; WebRTC et Web Crypto demandent un contexte sécurisé (HTTPS ou localhost).
 
-## GitHub Pages pour l’interface (optionnel)
+## Comment le P2P fonctionne
 
-Le plus simple est de tout servir depuis Node. Pour séparer les deux :
+PeerJS établit des **DataChannels WebRTC chiffrés** entre l’hôte et les joueurs. Un service de signalisation PeerServer Cloud et des services STUN aident les navigateurs à se trouver; **ce sont des services externes**, pas un backend de jeu à héberger. Les actions et les mains passent directement entre l’hôte et les téléphones. Les bibliothèques PeerJS et QR sont incluses dans le dépôt, pas chargées depuis un CDN.
 
-1. Déployer d’abord le serveur Node en HTTPS.
-2. Mettre son URL dans `public/config.js`, par exemple `window.NOVA_SERVER = 'https://votre-serveur.example';`.
-3. Publier le contenu de `public/` avec GitHub Pages. Le workflow `.github/workflows/pages.yml` est manuel; il publie uniquement l’interface. Dans Settings → Pages, sélectionner GitHub Actions.
-4. Définir `ALLOWED_ORIGIN=https://tommyaudetcontact-wq.github.io` sur le serveur pour restreindre CORS à cette origine.
+Le P2P Internet ne peut pas promettre zéro infrastructure externe : sans signalisation et traversée NAT, des téléphones ne se découvrent pas automatiquement avec un simple code de salon. Cette version utilise le service public gratuit de PeerJS. Certains réseaux restrictifs, VPN ou NAT peuvent empêcher une connexion directe; essayer le même Wi-Fi ou un autre réseau. Aucun relais TURN privé n’est configuré. La disponibilité du service de signalisation n’est pas garantie par ce projet.
 
-Ne pas confondre dépôt exporté et service Internet déployé : le multijoueur n’est accessible sur Internet qu’après le lancement du serveur.
+Documentation : https://peerjs.com/client/faq et https://peerjs.com/server/cloud.
 
-## Règles
+## Confidentialité et reconnexion
 
-108 cartes, 7 distribuées, correspondance couleur/chiffre/symbole; jokers, inversion, saut, +2, +4 avec contestation, annonce NOVA et pénalité d’oubli, recyclage de la pioche, score et revanche. En tête de manche, l’ouverture est toujours numérique. Les règles intégrées au bouton « ? » explicitent le comportement exact.
+L’hôte valide les coups et ne transmet à chaque téléphone que sa main privée. Les autres joueurs reçoivent uniquement les compteurs. L’interface de l’hôte ne montre aucune main. **L’hôte doit être de confiance : son navigateur possède l’état complet de la partie**, comme toute architecture P2P avec un arbitre unique.
 
-Options maison indépendantes : jeu à la volée avec carte identique, cumul des +2, pioche jusqu’à une carte jouable. Le +4 ne se cumule pas. Les variantes 7–0, échange de mains et cartes personnalisées ne font pas partie de cette version.
+Le navigateur conserve le jeton du joueur pour reconnecter après un rafraîchissement. La partie de l’hôte est conservée dans `sessionStorage` pour reprendre après un rafraîchissement du même onglet. Une fermeture définitive de l’onglet hôte perd la partie. Il n’y a pas de migration automatique d’hôte. Les déconnexions sont affichées; les absents conservent leur place. L’hôte peut retirer un joueur avant ou après une manche. Un joueur ne peut pas entrer en cours de manche.
 
-## Confidentialité et fonctionnement
+Ne pas partager son profil de navigateur. Deux onglets de la même origine partagent la session; utiliser un appareil ou un profil par joueur.
 
-Le serveur est l’autorité : validation de chaque coup avant mutation. Les flux privés ne contiennent que la main du joueur authentifié par un jeton aléatoire. Les autres voient des compteurs; l’hôte ne reçoit aucune main. Le code de salon permet de rejoindre uniquement avant le début. Le jeton est conservé dans le navigateur pour reconnecter après un rafraîchissement; ne pas partager son profil de navigateur. Les participants d’une même origine partagent une session : utiliser un appareil/profil distinct par joueur.
+## Règles et options
 
-Les salons sans connexion expirent après 6 heures d’inactivité. Les pseudos et scores ne sont pas sauvegardés sur disque. Les absents conservent leur place pour pouvoir se reconnecter; aucun remplacement ni passage automatique en cours de manche. L’hôte peut retirer un joueur avant le départ ou à la fin. Pas d’IA ni de mode solo.
+Paquet de 108 cartes, 7 cartes par joueur, correspondance couleur/chiffre/symbole, saut, inversion, +2, joker, +4 avec contestation, annonce NOVA et pénalité de dernière carte oubliée, recyclage de la pioche, scores et revanche. Les effets de la carte d’ouverture sont appliqués; un +4 d’ouverture est remélangé. Le donneur tourne. Objectif classique : 500 points, puis nouvelle partie et remise à zéro.
 
-## Vérification
+Options maison désactivées par défaut : interception avec carte exactement identique, cumul des +2, pioche jusqu’à carte jouable. Le +4 ne se cumule pas. Pas de 7–0, échange de mains, cartes personnalisées, IA ou mode solo. Les règles précises sont disponibles dans le jeu au bouton « ? ».
+
+Référence des règles : https://service.mattel.com/instruction_sheets/W2085-UNO.pdf.
+
+## Tests de développement (optionnels)
 
 ```sh
 node --test
 ```
 
-Tests des règles, de 50 manches complètes, de la conservation des cartes, des accès API et de la séparation des vues publiques/privées. Interface vérifiée avec un écran hôte et deux sessions de joueurs dans le navigateur. Une partie sur plusieurs téléphones physiques reste à faire sur le réseau d’hébergement final.
+Le moteur de production est `public/engine.js`; le fichier racine le réexporte pour les tests. Le navigateur utilise Web Crypto, sans dépendance Node. Les tests vérifient les règles, les vues privées et 50 manches simulées avec conservation des 108 cartes.
 
-## Visuels
+## Visuels et licences
 
-Univers original, sans personnages ou illustrations repris des franchises citées comme inspiration. Illustrations générées avec l’outil ImageGen intégré : `public/arena.png` (îles tropicales spatiales et gadgets, centre dégagé) et `public/mascots.png` (atlas 2×2 : axolotl explorateur, robot cyan, créature végétale, renard alien violet). Les cartes sont composées en CSS avec ces illustrations et des valeurs lisibles, jamais du texte peint dans les images. Prompts de production dans `ART-PROMPTS.txt`.
+Univers et illustrations originaux : arène tropicale dans l’espace, axolotl explorateur, robot cyan, créature végétale et renard alien mécanicien. Images créées avec ImageGen intégré, prompts dans `ART-PROMPTS.txt`; cartes composées en CSS à partir de ces illustrations. Aucune illustration ou personnage repris des franchises de référence.
 
-Le QR est généré localement avec qrcodejs (MIT), sa licence est incluse. Polices Barlow Condensed et DM Sans via Google Fonts; polices système de secours. Sons synthétisés dans le navigateur, activables par le joueur. Aucun son externe.
+PeerJS et qrcodejs : MIT, licences incluses dans `public/`. Polices Barlow Condensed et DM Sans via Google Fonts, avec polices de secours. Sons synthétisés dans le navigateur, activables par le joueur.

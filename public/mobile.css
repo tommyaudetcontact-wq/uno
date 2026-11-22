@@ -1,0 +1,19 @@
+@media(max-width:600px){
+  body.player-view .table-layout>section{display:flex;flex-direction:column}
+  body.player-view .hand-area{order:-1;padding-top:0}
+  body.player-view .hand{padding-top:20px;padding-bottom:15px;min-height:185px}
+  body.player-view .hand-actions{margin-top:0;padding-top:5px;position:static}
+  body.player-view .hand-area .status-note{margin:4px 0 22px}
+  body.player-view .arena{min-height:190px;order:1}
+  body.player-view .arena .card{width:80px;height:120px;border-width:4px;border-radius:12px}
+  body.player-view .arena .card .value{font-size:2.4rem}
+  body.player-view .arena .back .value{font-size:1.8rem}
+  body.player-view .arena .pile-label{font-size:.65rem}
+  body.player-view .players{order:2;display:flex;overflow-x:auto;padding:4px 1px}
+  body.player-view .player{min-width:135px;padding:10px;font-size:.85rem}
+  body.player-view .player .count{font-size:1.4rem;right:8px}
+  body.player-view .player .avatar{font-size:1.3rem}
+  body.player-view .history{display:none}
+  body.player-view .turn-banner{margin-bottom:18px}
+  body.player-view .turn-banner .eyebrow{font-size:.65rem;letter-spacing:1px;margin-bottom:8px}
+}

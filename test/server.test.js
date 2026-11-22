@@ -1,9 +1,0 @@
-import test from 'node:test';import assert from 'node:assert/strict';
-process.env.NODE_ENV='test';
-const {server}=await import('../server.js');
-test('API : autorisation, mains privées, synchronisation et routes statiques',async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));let base='http://127.0.0.1:'+server.address().port;
-const post=async(route,data,token)=>{let r=await fetch(base+'/api/'+route,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(data)});return {status:r.status,...await r.json()};};
-let streams=[];try{let host=await post('create',{}),a=await post('join',{room:host.code,name:'Alice'}),b=await post('join',{room:host.code,name:'Bob'});assert.equal((await post('action',{room:host.code,type:'start'},a.token)).status,400);assert.equal((await post('action',{room:host.code,type:'start'},host.token)).status,200);
-async function snapshot(token){let r=await fetch(base+'/api/events?room='+host.code+'&token='+token),reader=r.body.getReader();streams.push(reader);let {value}=await reader.read();let line=new TextDecoder().decode(value).split('\n').find(x=>x.startsWith('data: '));return JSON.parse(line.slice(6));}
-let hv=await snapshot(host.token),av=await snapshot(a.token),bv=await snapshot(b.token);assert.equal(hv.hand.length,0);assert.equal(av.hand.length,7);assert.equal(bv.hand.length,7);assert.notDeepEqual(av.hand,bv.hand);assert.equal((await fetch(base+'/api/events?room='+host.code+'&token=fake')).status,400);assert.equal((await post('join',{room:host.code,name:'Late'})).status,400);assert.equal((await fetch(base+'/')).status,200);assert.equal((await fetch(base+'/engine.js')).status,404);assert.equal((await fetch(base+'/public%2F..%2F..%2Fserver.js')).status,400);
-}finally{for(const s of streams)await s.cancel();server.closeAllConnections();await new Promise(r=>server.close(r));}});

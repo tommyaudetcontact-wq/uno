@@ -1,1 +1,1 @@
-{"name":"nova-party","version":"1.0.0","private":true,"type":"module","scripts":{"start":"node server.js","test":"node --test"},"engines":{"node":">=20"}}
+{"name":"nova-party","version":"2.0.0","private":true,"type":"module","description":"Jeu de cartes WebRTC P2P statique pour GitHub Pages","scripts":{"test":"node --test"}}

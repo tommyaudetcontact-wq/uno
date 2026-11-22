@@ -1,5 +1,7 @@
 name: Publier l’interface sur GitHub Pages
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
