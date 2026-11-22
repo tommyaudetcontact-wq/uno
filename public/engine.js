@@ -19,7 +19,7 @@ export function opening(g){
 export function start(g){
   if(g.players.length<2)throw Error('Il faut au moins 2 joueurs.');
   if(g.matchWinner){g.round=0;for(const p of g.players)p.score=0;}
-  g.matchWinner=null;g.status='playing';g.round++;g.deck=deck();g.discard=[];
+  g.matchWinner=null;g.status='playing';g.round++;g.deck=Array.from({length:Math.ceil(g.players.length/10)},()=>deck()).flat();shuffle(g.deck);g.discard=[];
   g.dealer=(g.round-2+g.players.length)%g.players.length;
   g.direction=1;g.turn=(g.dealer+1)%g.players.length;
   g.pending=0;g.challenge=null;g.drawn=null;g.vulnerable=null;g.winner=null;

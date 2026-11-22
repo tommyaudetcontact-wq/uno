@@ -17,3 +17,13 @@ test('transport P2P : rejoindre, vues privées, autorité et reconnexion',async(
  let oldId=gs.me;let again=await guest.request('join',{room:h.code,token:a.token});assert.equal(again.token,a.token);await tick();assert.equal(gs.me,oldId);assert.equal(hs.players.length,2);
  sa.close();sb.close();sub.close();
 });
+test('transport P2P : 32 places et refus de la 33e',async()=>{
+ let host=(await import('../public/transport.js?large-host')).transport,h=await host.request('create',{}),last;
+ let sub=host.subscribe(h,s=>last=s,()=>{}),subs=[];
+ for(let i=0;i<32;i++){let guest=(await import('../public/transport.js?large-'+i)).transport;let p=await guest.request('join',{room:h.code,name:'Joueur '+i});subs.push(guest.subscribe(p,()=>{},()=>{}));}
+ assert.equal(last.players.length,32);
+ let extra=(await import('../public/transport.js?extra')).transport;
+ await assert.rejects(extra.request('join',{room:h.code,name:'En trop'}),/complète/);
+ subs.push(extra.subscribe({role:'player',code:h.code,token:'invalid'},()=>{},()=>{}));
+ for(const s of subs)s.close();sub.close();
+});
