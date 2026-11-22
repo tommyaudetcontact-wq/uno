@@ -15,6 +15,13 @@ test('transport P2P : rejoindre, vues privées, autorité et reconnexion',async(
  assert.equal(JSON.stringify(gs).includes(b.token),false);assert.equal(gs.host,false);assert.equal(hs.host,true);
  await assert.rejects(guest.request('action',{room:h.code,type:'rules',rules:{stack:true}},a));
  let oldId=gs.me;let again=await guest.request('join',{room:h.code,token:a.token});assert.equal(again.token,a.token);await tick();assert.equal(gs.me,oldId);assert.equal(hs.players.length,2);
+ await assert.rejects(guest.request('action',{room:h.code,type:'end'},a),/hôte/);
+ assert.equal(hs.status,'playing');
+ await host.request('action',{room:h.code,type:'end'},h);await tick();
+ for(const state of [hs,gs,os]){assert.equal(state.status,'lobby');assert.equal(state.hand.length,0);assert.equal(state.round,0);assert.equal(state.winner,null);state.players.forEach(p=>{assert.equal(p.count,0);assert.equal(p.score,0);});}
+ assert.equal(hs.players.length,2);assert.equal(hs.pending,0);assert.equal(hs.challenge,false);
+ await assert.rejects(guest.request('action',{room:h.code,type:'draw'},a));
+ await host.request('action',{room:h.code,type:'start'},h);await tick();assert.equal(hs.status,'playing');assert.equal(hs.round,1);assert.ok(gs.hand.length>=7);
  sa.close();sb.close();sub.close();
 });
 test('transport P2P : 32 places et refus de la 33e',async()=>{

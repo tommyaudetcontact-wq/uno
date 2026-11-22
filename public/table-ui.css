@@ -25,3 +25,5 @@ body.in-game{overflow:hidden}body.in-game>header{display:none}body.in-game main{
 .host-stage .table-color{left:68%;top:61%;transform:translate(-50%,-50%)}
 
 .host-stage .crystal{display:none}.world-colors{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.9}
+
+.host-menu .end-game{margin-top:20px;color:#ffb7b2;border-color:#ff635f77;background:#ff635f16}

@@ -79,3 +79,5 @@ Pendant la manche, l’hôte affiche une arène qui remplit toute la fenêtre : 
 Le hamburger en haut à droite ouvre les commandes hôte. Le fil de partie est masqué par défaut, activable dans ce menu; son affichage ne concerne que cet écran. Le plein écran du navigateur reste une action disponible dans le menu. Sur téléphone, seule la main personnelle apparaît en éventail; les adversaires sont représentés par leur avatar et un compteur.
 
 La couleur active se reflète dans la lumière de la planète, les cristaux et les plateformes du décor, y compris après une faille cosmique. Les 16 portraits originaux (explorateurs, robots, princesses et créatures) sont intégrés dans `public/avatars.png`, générés avec ImageGen intégré. Aucun personnage de franchise n’a été repris.
+
+Dans le menu hamburger, l’hôte peut terminer la partie : tous les appareils reviennent au salon, les mains et les scores sont remis à zéro, sans gagnant. Les joueurs, avatars, connexions et règles restent disponibles pour relancer une partie. Seul le jeton hôte autorise cette action.

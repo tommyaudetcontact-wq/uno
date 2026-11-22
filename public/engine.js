@@ -6,6 +6,13 @@ export function deck(){let d=[];for(const c of colors){for(let n=0;n<=9;n++)for(
 export function shuffle(d){for(let i=d.length-1;i>0;i--){let j=randomInt(i+1);[d[i],d[j]]=[d[j],d[i]];}return d;}
 export function log(g,s){g.feed.unshift({text:s,time:Date.now()});g.feed=g.feed.slice(0,40);g.updated=Date.now();}
 export function room(code,host){return {code,host,players:[],status:'lobby',rules:{jump:false,stack:false,drawUntil:false,challenge:true},feed:[],updated:Date.now(),round:0};}
+export function end(g){
+  if(!['playing','finished'].includes(g.status))throw Error('Aucune partie à terminer.');
+  g.status='lobby';g.round=0;g.deck=[];g.discard=[];g.turn=0;g.direction=1;
+  g.pending=0;g.challenge=null;g.drawn=null;g.vulnerable=null;g.winner=null;g.matchWinner=null;g.chooseColor=false;g.color=null;
+  for(const p of g.players){p.hand=[];p.uno=false;p.score=0;}
+  log(g,'Partie terminée par l’hôte. Retour au salon pour une nouvelle partie.');
+}
 function next(g,n=1){return (g.turn+n*g.direction+g.players.length*10)%g.players.length;}
 export function draw(g,p,n){for(let i=0;i<n;i++){if(!g.deck.length){let top=g.discard.pop();g.deck=shuffle(g.discard);g.discard=[top];}if(!g.deck.length)break;p.hand.push(g.deck.pop());}p.uno=false;}
 export function opening(g){
