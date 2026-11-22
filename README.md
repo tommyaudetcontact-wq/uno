@@ -62,3 +62,9 @@ PeerJS et qrcodejs : MIT, licences incluses dans `public/`. Polices Barlow Conde
 Limite : 32 joueurs. Les salons de plus de 10 joueurs utilisent automatiquement plusieurs paquets et constituent une variante de groupe. Le moteur et la distribution sont testés à 11, 16 et 32 joueurs. Le transport est testé automatiquement avec des pairs simulés; une vraie liaison WebRTC hôte + deux joueurs, les coups et la reconnexion après rafraîchissement de l’hôte ont été vérifiés dans le navigateur. Les performances à 32 appareils physiques ne sont pas garanties sans un essai sur les appareils et réseaux concernés. Un ordinateur récent est préférable pour héberger un grand salon.
 
 Présentation et retours visuels étudiés à partir du gameplay Ubisoft : https://www.youtube.com/watch?v=olm7zZ6V0pk. Univers et interface propres à NOVA; il ne s’agit pas d’une reproduction du jeu Ubisoft.
+
+## Effets visuels
+
+Canvas additif : particules lumineuses à traînées, sprites de halo, ondes concentriques, arcs électriques et vortex sur les cartes spéciales; supernovas et feux cosmiques sur NOVA et la victoire. La boucle s’arrête quand les effets sont finis et quand l’onglet est masqué. Densité et résolution limitées sur mobile; préférence de réduction des animations respectée. Les effets ne bloquent aucun contrôle.
+
+Le décor illustré conserve son image originale; des couches Canvas ajoutent vaisseaux à propulsion turquoise, étoiles filantes et scintillements lents. Ces éléments restent derrière les cartes. Ils s’arrêtent dans les onglets masqués et respectent la réduction des animations.

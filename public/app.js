@@ -1,5 +1,6 @@
-import {transport} from './transport.js';
-import {captureScene,animateScene} from './effects.js';
+import './scenery.js?v=4';
+import {transport} from './transport.js?v=4';
+import {captureScene,animateScene} from './effects.js?v=4';
 const $=s=>document.querySelector(s),app=$('#app'),avatars=['🦊','🤖','🌱','👾','🦎','🪐','⚡','💎'];
 const colors=['coral','cyan','lime','violet'],names={coral:'Corail',cyan:'Azur',lime:'Lime',violet:'Violet'},symbols={skip:'⊘',reverse:'⇄',wild:'✦','+2':'+2','+4':'+4'},worlds={coral:'Braise sauvage',cyan:'Turbo-mécano',lime:'Jungle électrique',violet:'Cosmo-renard',wild:'Faille cosmique'};
 let session=JSON.parse(localStorage.getItem('nova-session')||'null'),state,source,selectedAvatar=0,sound=false,audio,busy=false,pendingCard,toastTimer,lastFeed='',lastStatus='',screen='home';
