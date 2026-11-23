@@ -74,11 +74,11 @@ L’hôte peut activer ou désactiver « Contester les +4 » avant le départ et
 
 ## Interface arène (version 6)
 
-Pendant la manche, l’hôte affiche une arène qui remplit toute la fenêtre : avatars autour de la table, compteurs de mains, joueur actif lumineux, pioche et défausse empilée. Aucune face de carte privée n’est rendue sur l’hôte. Une couronne de flèches tourne dans le sens actuel. Les cartes piochées et la distribution voyagent de la pioche aux portraits; les cartes jouées rejoignent la pile centrale.
+Pendant la manche, l’hôte affiche une arène qui remplit toute la fenêtre : avatars autour de la table, compteurs de mains, joueur actif lumineux, pioche et défausse empilée. Aucune face de carte privée n’est rendue sur l’hôte. Des météorites illustrées tournent dans le sens actuel, avec des traînées lumineuses animées. Les cartes piochées et la distribution voyagent de la pioche aux portraits; les cartes jouées rejoignent la pile centrale.
 
 Le hamburger en haut à droite ouvre les commandes hôte. Le fil de partie est masqué par défaut, activable dans ce menu; son affichage ne concerne que cet écran. Le plein écran du navigateur reste une action disponible dans le menu. Sur téléphone, seule la main personnelle apparaît en éventail; les adversaires sont représentés par leur avatar et un compteur.
 
-La couleur active se reflète dans la lumière de la planète, les cristaux et les plateformes du décor, y compris après une faille cosmique. Les 16 portraits originaux (explorateurs, robots, princesses et créatures) sont intégrés dans `public/avatars.png`, générés avec ImageGen intégré. Aucun personnage de franchise n’a été repris.
+La couleur active se reflète dans la lumière de la planète, les cristaux et les plateformes du décor, y compris après une faille cosmique. Les 48 portraits originaux (explorateurs, robots, princesses et créatures) sont intégrés dans `public/avatars.png`, générés avec ImageGen intégré. Aucun personnage de franchise n’a été repris.
 
 Dans le menu hamburger, l’hôte peut terminer la partie : tous les appareils reviennent au salon, les mains et les scores sont remis à zéro, sans gagnant. Les joueurs, avatars, connexions et règles restent disponibles pour relancer une partie. Seul le jeton hôte autorise cette action.
 
@@ -93,3 +93,12 @@ Le téléphone du joueur actif affiche un cadre lumineux sur tout le contour et 
 La pioche du téléphone est lumineuse dès qu’elle est disponible, et devient dorée avec « PIOCHER MAINTENANT » lorsqu’aucun coup n’est jouable. Les pénalités affichent leur quantité. Les flèches ont un tracé lumineux épais sur un contour sombre; le grand bandeau hôte montre l’avatar et le nom du joueur actif.
 
 Version 15 : les flèches sont remplacées par des météorites à traînées lumineuses. Le joueur actif et le prochain sont indiqués autour de la table et dans la liste mobile ordonnée. Le choix de couleur montre la main restante et laisse son éventail visible.
+
+
+## Version 16
+
+32 nouveaux personnages sont ajoutés aux 16 existants. Les anciens indices restent compatibles. Riff est un marsupial aventurier original, Capitaine Zenith un ranger spatial original. Le nouvel atlas 8 × 4 est `public/avatars-expansion.png`; les météorites utilisent `public/meteor.png`. Images créées avec ImageGen intégré : portraits 3D colorés de créatures et explorateurs cosmiques, et roche violette incandescente avec cristaux dorés sur fond transparent. Les traînées sont animées séparément (flux, pulsation et étincelles), avec réduction des animations prise en compte.
+
+La pioche est reculée en haut à gauche et réduite; la défausse garde le centre. Le bouton NOVA apparaît uniquement lorsqu’une carte reste en main. La dernière carte dispose de 1,5 seconde pour son animation avant le résultat. Après chaque manche, les téléphones peuvent voter pour rejouer ou retirer leur vote; le compteur et les votes sont visibles sur tous les écrans. L’unanimité de tous les joueurs inscrits (y compris momentanément déconnectés) relance automatiquement la manche, avec sept cartes et les mêmes règles. Les scores sont conservés jusqu’à 500 points, puis remis à zéro. L’hôte garde aussi sa commande de lancement.
+
+Les nouveaux salons activent par défaut le jeu à la volée et le cumul des +2; les réglages restent modifiables avant le départ. Les salons déjà ouverts conservent leurs réglages.

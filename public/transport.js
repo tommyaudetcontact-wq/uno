@@ -1,4 +1,4 @@
-import {room,start,end,action,view,log} from './engine.js?v=15';
+import {room,start,end,action,view,log} from './engine.js?v=16';
 
 // Étoile WebRTC : l'écran partagé est l'autorité, chaque téléphone est un pair.
 // PeerServer Cloud ne transporte que la signalisation. Pas de backend applicatif.
@@ -25,7 +25,7 @@ function accept(c){let token=null,n=0,windowStart=Date.now();const authTimer=set
       if(String(a.room)!==game.code)throw Error('Code incorrect.');
       let p=game.players.find(x=>x.token===a.token);
       if(!p&&msg.route==='resume')throw Error('Ta place n’est plus disponible.');
-      if(!p){if(game.status!=='lobby')throw Error('Cette manche a déjà commencé.');if(game.players.length>=32)throw Error('La partie est complète.');let name=String(a.name||'').trim().slice(0,20);if(!name)throw Error('Entre ton pseudo.');p={id:uuid(),token:uuid(),name,avatar:Math.max(0,Math.min(15,Math.floor(Number(a.avatar)||0))),hand:[],score:0,online:true};game.players.push(p);log(game,name+' entre dans l’arène.');}
+      if(!p){if(game.status!=='lobby')throw Error('Cette manche a déjà commencé.');if(game.players.length>=32)throw Error('La partie est complète.');let name=String(a.name||'').trim().slice(0,20);if(!name)throw Error('Entre ton pseudo.');p={id:uuid(),token:uuid(),name,avatar:Math.max(0,Math.min(47,Math.floor(Number(a.avatar)||0))),hand:[],score:0,online:true};game.players.push(p);log(game,name+' entre dans l’arène.');}
       if(token&&token!==p.token)throw Error('Connexion déjà associée.');
       token=p.token;clearTimeout(authTimer);let previous=clients.get(token);clients.set(token,c);if(previous&&previous!==c)previous.close();p.online=true;
       result={code:game.code,token,role:'player'};c.send({kind:'result',id:msg.id,result});publish();return;
