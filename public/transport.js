@@ -1,5 +1,5 @@
-import {botDecision} from './bots.js?v=25';
-import {room,start,end,action,view,log,resetReady,assignTeams,teamChange,syncReady,advanceLobby} from './engine.js?v=25';
+import {botDecision} from './bots.js?v=26';
+import {room,start,end,action,view,log,resetReady,assignTeams,teamChange,syncReady,advanceLobby} from './engine.js?v=26';
 
 // Étoile WebRTC : l'écran partagé est l'autorité, chaque téléphone est un pair.
 // PeerServer Cloud ne transporte que la signalisation. Pas de backend applicatif.
