@@ -1,8 +1,8 @@
-import {bindMusic,openMusic,musicControls} from './music.js?v=16';
-import {renderTable,bindTable,portrait,avatarNames} from './table-ui.js?v=16';
-import './scenery.js?v=16';
-import {transport} from './transport.js?v=16';
-import {captureScene,animateScene} from './effects.js?v=16';
+import {bindMusic,openMusic,musicControls} from './music.js?v=17';
+import {renderTable,bindTable,portrait,avatarNames} from './table-ui.js?v=17';
+import './scenery.js?v=17';
+import {transport} from './transport.js?v=17';
+import {captureScene,animateScene} from './effects.js?v=17';
 const $=s=>document.querySelector(s),app=$('#app'),avatars=avatarNames.map((_,i)=>portrait(i));
 const colors=['coral','cyan','lime','violet'],names={coral:'Corail',cyan:'Azur',lime:'Lime',violet:'Violet'},symbols={skip:'⊘',reverse:'⇄',wild:'✦','+2':'+2','+4':'+4'},worlds={coral:'Braise sauvage',cyan:'Turbo-mécano',lime:'Jungle électrique',violet:'Cosmo-renard',wild:'Faille cosmique'};
 let session=JSON.parse(localStorage.getItem('nova-session')||'null'),state,source,selectedAvatar=0,sound=false,audio,busy=false,pendingCard,toastTimer,lastFeed='',lastStatus='',screen='home',victoryUntil=0,victoryTimer;

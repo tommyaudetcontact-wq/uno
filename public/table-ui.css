@@ -64,3 +64,8 @@ body.in-game{overflow:hidden}body.in-game>header{display:none}body.in-game main{
 .meteor-head,.meteor-crater,.meteor-lava,.meteor-hot-core{display:none}.meteor-art{filter:drop-shadow(0 0 5px #ffad4d99)}
 @media(max-width:600px){.winner{padding:20px!important}.winner .trophy{font-size:2.8rem}.winner h1{font-size:2.6rem;margin:12px 0}.winner>p{margin:10px 0}.winner .rematch-panel{padding:14px;margin:15px auto}.winner .score-row{padding:8px}.winner>div[style]{margin:12px auto!important}.winner .rematch-panel h3{margin:0 0 8px}}
 body.player-view .phone-stage .arena .draw-pile .card{width:49px;height:74px;border-width:3px;border-radius:10px}
+
+/* Le sillage est sous toutes les roches; les particules partent du noyau vers la pointe. */
+.meteor-flame-aura,.meteor-flame,.meteor-flame-core{fill:url(#meteor-tail);stroke:none;transform-box:fill-box;transform-origin:right bottom}.meteor-flame-aura{filter:blur(5px);opacity:.55}.meteor-flame{animation:meteor-flame-flicker .8s ease-in-out infinite alternate}.meteor-flame-core{filter:drop-shadow(0 0 3px #ffe4a3);opacity:.7}.meteor-dust{opacity:0;filter:drop-shadow(0 0 2px #ffd487)}
+@keyframes meteor-flame-flicker{from{opacity:.75}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.meteor-flame{animation:none}.meteor-dust{display:none}}

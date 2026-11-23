@@ -102,3 +102,5 @@ Version 15 : les flèches sont remplacées par des météorites à traînées lu
 La pioche est reculée en haut à gauche et réduite; la défausse garde le centre. Le bouton NOVA apparaît uniquement lorsqu’une carte reste en main. La dernière carte dispose de 1,5 seconde pour son animation avant le résultat. Après chaque manche, les téléphones peuvent voter pour rejouer ou retirer leur vote; le compteur et les votes sont visibles sur tous les écrans. L’unanimité de tous les joueurs inscrits (y compris momentanément déconnectés) relance automatiquement la manche, avec sept cartes et les mêmes règles. Les scores sont conservés jusqu’à 500 points, puis remis à zéro. L’hôte garde aussi sa commande de lancement.
 
 Les nouveaux salons activent par défaut le jeu à la volée et le cumul des +2; les réglages restent modifiables avant le départ. Les salons déjà ouverts conservent leurs réglages.
+
+Version 17 : sillage effilé derrière la roche, flux des particules à l’opposé du déplacement, opacité et taille décroissantes vers la pointe. Toutes les roches sont dessinées après toutes les traînées pour garantir leur superposition.
