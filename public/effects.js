@@ -1,7 +1,7 @@
-import {impactSound} from './sound-events.js?v=27';
-import {playSfx} from './sfx.js?v=27';
-import {quality} from './quality.js?v=27';
-import {cosmicBurst} from './vfx.js?v=27';
+import {impactSound} from './sound-events.js?v=28';
+import {playSfx} from './sfx.js?v=28';
+import {quality} from './quality.js?v=28';
+import {cosmicBurst} from './vfx.js?v=28';
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 const box=e=>e?.getBoundingClientRect();
 export function captureScene(s){if(!s)return {};let orbit=document.querySelector('.meteor-orbit'),matrix=orbit?getComputedStyle(orbit).transform.match(/matrix\(([^)]+)\)/):null,values=matrix?.[1].split(',').map(Number);return {orbitAngle:values?Math.atan2(values[1],values[0])*180/Math.PI:0,deck:box(document.querySelector('.arena [data-pile="draw"] .card')),top:box(document.querySelector('.arena [data-pile="discard"] .top-card .card')),hand:Object.fromEntries([...document.querySelectorAll('[data-card]')].map(e=>[e.dataset.card,box(e)]))};}

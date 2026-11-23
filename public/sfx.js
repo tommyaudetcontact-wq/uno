@@ -1,5 +1,5 @@
 // Échantillons préchargés, décodés une fois, puis joués par Web Audio sans charger au clic.
-const files={draw:'draw-card.mp3',play:'play-card.mp3',land:'card-land.mp3',reverse:'reverse.mp3',color:'change-color.mp3',penalty:'penalty-impact.mp3',nova:'nova-beep.mp3',voice:'nova-voice-continuous.wav'};
+const files={draw:'draw-card.mp3',play:'play-card.mp3',land:'card-land.mp3',reverse:'reverse.mp3',color:'change-color.mp3',penalty:'penalty-impact.mp3',nova:'nova-beep.mp3',voice:'nova-voice-arena.wav'};
 let enabled=true;try{enabled=localStorage.getItem('nova-sfx')!=='off';}catch{}
 let ctx,bus,loading;const buffers=new Map(),active=new Set(),stats={};
 const fetched=globalThis.document?Object.entries(files).map(([key,file])=>[key,fetch(new URL('./sounds/'+file,import.meta.url)).then(r=>{if(!r.ok)throw Error('Son indisponible');return r.arrayBuffer();}).catch(()=>null)]):[];
