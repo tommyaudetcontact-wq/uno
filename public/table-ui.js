@@ -1,4 +1,4 @@
-import {budget} from './quality.js?v=22';
+import {budget} from './quality.js?v=23';
 const labels={coral:'Corail',cyan:'Azur',lime:'Lime',violet:'Violet'};
 let menuOpen=false,showFeed=localStorage.getItem('nova-show-feed')==='true';
 export const avatarNames=['Roxy','Bolt','Pip','Nyx','Princesse Lyra','Princesse Sola','Kiro','Mox','Zing','Orion','Vega','Princesse Astra','Gizmo','Nox','Flint','Bloom','Riff','Capitaine Zenith','Princesse Nebula','Axel','Fennec','Croak','Drako','Florobot','Kraken','Princesse Paya','Grizz','Celeste','Blaze','Reine Nova','Dash','Medusa','Cactus Jack','Hoot','Finn','Myca','Diggy','Professeur Bao','Aria','Noctis','Tortuga','Phenix','Princesse Mantis','Fenrir','Scarab','Glacio','Merlin','Sol'];
