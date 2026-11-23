@@ -1,0 +1,7 @@
+// Un profil local par navigateur : le pseudo peut changer sans perdre les records.
+const KEY='nova-statistics-v1';
+const blank=()=>({version:1,name:'Explorateur',played:0,wins:0,losses:0,streak:0,bestStreak:0,points:0,bestScore:0,seen:[],history:[]});
+export function createStats(storage){
+ function read(){try{const s=JSON.parse(storage.getItem(KEY));if(s?.version!==1||!Array.isArray(s.seen)||!Array.isArray(s.history))return blank();for(const k of ['played','wins','losses','streak','bestStreak','points','bestScore'])if(!Number.isSafeInteger(s[k])||s[k]<0)return blank();return s;}catch{return blank();}}
+ return {read,record(s){if(s?.status!=='finished'||!s.me||!s.roundId||!s.winner)return false;const me=s.players.find(p=>p.id===s.me);if(!me||me.bot)return false;const saved=read();if(saved.seen.includes(s.roundId))return false;const won=s.mode==='teams'?s.winningTeam!=null&&me.team===s.winningTeam:s.winner===s.me;const points=won?Math.max(0,Math.floor(Number(s.roundPoints)||0)):0;saved.name=me.name;saved.played++;saved.wins+=Number(won);saved.losses+=Number(!won);saved.streak=won?saved.streak+1:0;saved.bestStreak=Math.max(saved.bestStreak,saved.streak);saved.points+=points;saved.bestScore=Math.max(saved.bestScore,points);saved.seen.push(s.roundId);saved.history.unshift({id:s.roundId,date:Date.now(),name:me.name,won,points,mode:s.mode||'classic'});saved.history=saved.history.slice(0,100);storage.setItem(KEY,JSON.stringify(saved));return true;}};
+}
