@@ -89,3 +89,5 @@ Arcade Rush et Quantum Dash, fichiers fournis par l’utilisateur, sont inclus d
 ## Lisibilité du tour et des jokers
 
 Le téléphone du joueur actif affiche un cadre lumineux sur tout le contour et un bandeau « À TOI DE JOUER ! ». Le cadre reste visible pendant son tour puis disparaît; sa pulsation est désactivée si la réduction des animations est demandée. Les jokers posés prennent la couleur choisie, y compris dans la défausse. Un joker repris à la pioche redevient multicolore dans la main.
+
+La pioche du téléphone est lumineuse dès qu’elle est disponible, et devient dorée avec « PIOCHER MAINTENANT » lorsqu’aucun coup n’est jouable. Les pénalités affichent leur quantité. Les flèches ont un tracé lumineux épais sur un contour sombre; le grand bandeau hôte montre l’avatar et le nom du joueur actif.
