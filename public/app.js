@@ -1,8 +1,9 @@
-import {bindMusic,openMusic,musicControls} from './music.js?v=17';
-import {renderTable,bindTable,portrait,avatarNames} from './table-ui.js?v=17';
-import './scenery.js?v=17';
-import {transport} from './transport.js?v=17';
-import {captureScene,animateScene} from './effects.js?v=17';
+import {budget} from './quality.js?v=18';
+import {bindMusic,openMusic,musicControls} from './music.js?v=18';
+import {renderTable,bindTable,portrait,avatarNames} from './table-ui.js?v=18';
+import './scenery.js?v=18';
+import {transport} from './transport.js?v=18';
+import {captureScene,animateScene} from './effects.js?v=18';
 const $=s=>document.querySelector(s),app=$('#app'),avatars=avatarNames.map((_,i)=>portrait(i));
 const colors=['coral','cyan','lime','violet'],names={coral:'Corail',cyan:'Azur',lime:'Lime',violet:'Violet'},symbols={skip:'⊘',reverse:'⇄',wild:'✦','+2':'+2','+4':'+4'},worlds={coral:'Braise sauvage',cyan:'Turbo-mécano',lime:'Jungle électrique',violet:'Cosmo-renard',wild:'Faille cosmique'};
 let session=JSON.parse(localStorage.getItem('nova-session')||'null'),state,source,selectedAvatar=0,sound=false,audio,busy=false,pendingCard,toastTimer,lastFeed='',lastStatus='',screen='home',victoryUntil=0,victoryTimer;
@@ -30,5 +31,7 @@ function render(){if(!state)return;if(state.status==='finished'&&victoryUntil>Da
 $('#rematch')?.addEventListener('click',()=>act('rematch',{vote:!s.rematchVotes?.includes(s.me)}));$('#opening-color')?.addEventListener('click',()=>openColorChoice());$('#start')?.addEventListener('click',()=>act('start'));$('#leave')?.addEventListener('click',leave);$('#deck-draw')?.addEventListener('click',()=>act('draw'));$('#draw')?.addEventListener('click',()=>act('draw'));$('#pass')?.addEventListener('click',()=>act('pass'));$('#challenge')?.addEventListener('click',()=>act('challenge'));$('#uno')?.addEventListener('click',()=>act('uno'));$('#catch')?.addEventListener('click',()=>act('catch'));$('#invite')?.addEventListener('click',()=>toast('Salon '+s.code+' · '+joinUrl()));document.querySelectorAll('[data-rule]').forEach(x=>x.onchange=()=>{let r={...s.rules};document.querySelectorAll('[data-rule]').forEach(y=>r[y.dataset.rule]=y.checked);act('rules',{rules:r});});document.querySelectorAll('[data-remove]').forEach(x=>x.onclick=()=>act('remove',{player:x.dataset.remove}));document.querySelectorAll('[data-card]').forEach(b=>b.onclick=()=>{let c=s.hand.find(x=>x.id===b.dataset.card);if(!canPlay(c))return toast('Cette carte n’est pas jouable maintenant.');if(c.c==='wild'){openColorChoice(c.id);}else act('play',{card:c.id});});}
 $('#music').onclick=openMusic;
 $('#help').onclick=()=>$('#rules').showModal();document.querySelectorAll('dialog .close').forEach(b=>b.onclick=()=>b.closest('dialog').close());$('#sound').onclick=()=>{sound=!sound;$('#sound').textContent=sound?'♪':'♫';$('#sound').setAttribute('aria-label',sound?'Couper les sons':'Activer les sons');if(sound)beep();toast(sound?'Sons activés':'Sons désactivés');};$('#fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{toast('Le plein écran n’est pas disponible sur cet appareil.');}};$('.colors').innerHTML=colors.map(c=>`<button data-color="${c}" aria-label="${names[c]}" style="--c:var(--${c})">${names[c]}</button>`).join('');document.querySelectorAll('[data-color]').forEach(b=>b.onclick=()=>{$('#color').close();if(pendingCard)act('play',{card:pendingCard,color:b.dataset.color});else act('color',{color:b.dataset.color});});
-function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<65;i++){let x=document.createElement('i');x.className='confetti';x.style.cssText=`left:${Math.random()*100}%;background:var(--${colors[i%4]});animation-delay:${Math.random()}s;animation-duration:${2+Math.random()*2}s`;document.body.append(x);setTimeout(()=>x.remove(),5000);}}
+function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<Math.round(65*budget().density);i++){let x=document.createElement('i');x.className='confetti';x.style.cssText=`left:${Math.random()*100}%;background:var(--${colors[i%4]});animation-delay:${Math.random()}s;animation-duration:${2+Math.random()*2}s`;document.body.append(x);setTimeout(()=>x.remove(),5000);}}
 let requested=new URLSearchParams(location.search).get('room');if(requested&&requested!==session?.code)joinForm(requested);else if(session)connect();else home();
+
+document.addEventListener('nova-quality',()=>{if(state?.status==='playing')render();});

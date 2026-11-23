@@ -104,3 +104,11 @@ La pioche est reculée en haut à gauche et réduite; la défausse garde le cent
 Les nouveaux salons activent par défaut le jeu à la volée et le cumul des +2; les réglages restent modifiables avant le départ. Les salons déjà ouverts conservent leurs réglages.
 
 Version 17 : sillage effilé derrière la roche, flux des particules à l’opposé du déplacement, opacité et taille décroissantes vers la pointe. Toutes les roches sont dessinées après toutes les traînées pour garantir leur superposition.
+
+## Version 18 — qualité locale et charge graphique
+
+Le bouton ⚡ ouvre Auto, Fluide, Équilibré ou Détaillé, sur téléphone comme dans le menu hôte. Le choix reste enregistré sur cet appareil uniquement. Auto démarre prudemment selon les capacités disponibles et adapte la qualité vers le bas après deux fenêtres de trois secondes de rendu lent (moyenne supérieure à 27 ms). Le mode manuel reste stable. Aucune règle ni donnée réseau ne change.
+
+Les filtres imbriqués du SVG des météorites sont supprimés, les particules passent de 54 à 12 en Fluide et à 21 en Équilibré. Les traînées effilées et les illustrations restent présentes. Le contour du tour reste visible sans animer son ombre en permanence sur les profils allégés. Le décor est dessiné à une résolution réduite et moins souvent; ses dimensions sont mises en cache via ResizeObserver. Les explosions de cartes utilisent une densité, une résolution et un plafond de particules adaptés; les flous Canvas sont désactivés sur les profils allégés. Les nouveaux niveaux de qualité sont appliqués à la table sans attendre une action réseau.
+
+Mesure locale contrôlée dans le navigateur de bureau, scène mobile simulée de 390 × 844, échantillons de 6,5 secondes (aucune mesure physique sur téléphone ancien) : avant, moyenne 16,77 ms / p95 17,1 ms, 162 animations SVG et canvas 358 × 342; Équilibré, moyenne 17,08 ms / p95 17,1 ms, 63 animations SVG et canvas 269 × 257; Fluide, moyenne 16,68 ms / p95 17,1 ms, 36 animations SVG et canvas 179 × 171. Le poste était déjà proche de 60 FPS : ces mesures confirment la diminution de travail, sans démontrer un gain de FPS sur appareil faible. Les baisses automatiques et le maintien du réglage manuel sont couverts par des tests déterministes.

@@ -69,3 +69,18 @@ body.player-view .phone-stage .arena .draw-pile .card{width:49px;height:74px;bor
 .meteor-flame-aura,.meteor-flame,.meteor-flame-core{fill:url(#meteor-tail);stroke:none;transform-box:fill-box;transform-origin:right bottom}.meteor-flame-aura{filter:blur(5px);opacity:.55}.meteor-flame{animation:meteor-flame-flicker .8s ease-in-out infinite alternate}.meteor-flame-core{filter:drop-shadow(0 0 3px #ffe4a3);opacity:.7}.meteor-dust{opacity:0;filter:drop-shadow(0 0 2px #ffd487)}
 @keyframes meteor-flame-flicker{from{opacity:.75}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.meteor-flame{animation:none}.meteor-dust{display:none}}
+
+/* Les halos sont déjà peints dans les sprites : pas de filtre sur tout le SVG animé. */
+.meteor-orbit,.meteor-art,.meteor-dust,.meteor-flame-core{filter:none}.meteor-flame-aura{display:none}.quality-button{margin-left:auto;margin-right:8px}#quality-dialog{max-width:440px}.quality-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}.quality-choices [aria-pressed=true]{border-color:#dfff88;background:#dfff8822;color:#eaffb2}
+html[data-quality=balanced] .meteor-dust:nth-of-type(n+8),html[data-quality=low] .meteor-dust:nth-of-type(n+5){display:none}
+html[data-quality=balanced] .meteor-dust:nth-of-type(n+8) *,html[data-quality=low] .meteor-dust:nth-of-type(n+5) *{display:none}
+html[data-quality=balanced] .planet-halo,html[data-quality=low] .planet-halo,html[data-quality=low] .crystal{display:none}
+html[data-quality=balanced] .phone-stage.is-my-turn:before,html[data-quality=low] .phone-stage.is-my-turn:before{animation:none;box-shadow:0 0 10px #ceff6c88,inset 0 0 8px #ceff6c33}
+html[data-quality=low] .meteor-flame,html[data-quality=low] .seat.active:before,html[data-quality=low] .draw-needed,html[data-quality=low] .draw-needed .card{animation:none!important}
+html[data-quality=low] .scene-light{box-shadow:none;mix-blend-mode:normal;opacity:.3}
+html[data-quality=low] .hamburger{backdrop-filter:none}html[data-quality=low] .cosmic-fx{mix-blend-mode:normal}
+html[data-quality=low] .phone-stage .hand .card{filter:none;transition:transform .18s}html[data-quality=low] .phone-stage .hand .card.unplayable{opacity:.65}
+html[data-quality=low] .seat.active .portrait{box-shadow:0 0 0 3px #dfff8833}html[data-quality=low] .seat.active:before{display:none}
+html[data-quality=low] .meteor-dust:nth-of-type(n+5){visibility:hidden}
+
+html[data-quality=low] dialog::backdrop{backdrop-filter:none}
