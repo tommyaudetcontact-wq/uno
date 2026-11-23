@@ -1,4 +1,4 @@
-import {budget} from './quality.js?v=24';
+import {budget} from './quality.js?v=25';
 const sceneryImage=new Image();sceneryImage.src=new URL('./arena.png',import.meta.url).href;
 const worldColors={coral:'#ff635f',cyan:'#42d8f0',lime:'#bee95d',violet:'#a18aff'};
 function tintWorld(s,w,h){
