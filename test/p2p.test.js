@@ -10,13 +10,14 @@ test('transport P2P : rejoindre, vues privées, autorité et reconnexion',async(
  let a=await guest.request('join',{room:h.code,name:'Alice',avatar:15});let sa=guest.subscribe(a,s=>gs=s,()=>{});
  let b=await other.request('join',{room:h.code,name:'Bob',avatar:1});let sb=other.subscribe(b,s=>os=s,()=>{});
  const tick=()=>new Promise(r=>setImmediate(r));await tick();assert.equal(hs.players.length,2);assert.equal(hs.players[0].avatar,15);assert.equal(gs.me,hs.players[0].id);assert.equal(os.me,hs.players[1].id);
+ await guest.request('action',{room:h.code,type:'profile',name:'Zenith',avatar:47},a);await tick();assert.equal(hs.players[0].name,'Zenith');assert.equal(os.players[0].avatar,47);assert.equal(gs.me,hs.players[0].id);
  await assert.rejects(guest.request('action',{room:h.code,type:'start'},a));
  await host.request('action',{room:h.code,type:'start'},h);await tick();assert.equal(hs.hand.length,0);assert.ok(gs.hand.length>=7);assert.ok(os.hand.length>=7);assert.equal(gs.players[1].hand,undefined);assert.notDeepEqual(gs.hand,os.hand);
  assert.equal(JSON.stringify(gs).includes(b.token),false);assert.equal(gs.host,false);assert.equal(hs.host,true);
  await assert.rejects(guest.request('action',{room:h.code,type:'rules',rules:{stack:true}},a));
  let oldId=gs.me;let again=await guest.request('join',{room:h.code,token:a.token});assert.equal(again.token,a.token);await tick();assert.equal(gs.me,oldId);assert.equal(hs.players.length,2);
  await assert.rejects(guest.request('action',{room:h.code,type:'end'},a),/hôte/);
- assert.equal(hs.status,'playing');
+ assert.equal(hs.status,'playing');await assert.rejects(guest.request('action',{room:h.code,type:'profile',name:'Interdit',avatar:1},a));
  await host.request('action',{room:h.code,type:'end'},h);await tick();
  for(const state of [hs,gs,os]){assert.equal(state.status,'lobby');assert.equal(state.hand.length,0);assert.equal(state.round,0);assert.equal(state.winner,null);state.players.forEach(p=>{assert.equal(p.count,0);assert.equal(p.score,0);});}
  assert.equal(hs.players.length,2);assert.equal(hs.pending,0);assert.equal(hs.challenge,false);
@@ -34,3 +35,5 @@ test('transport P2P : 32 places et refus de la 33e',async()=>{
  subs.push(extra.subscribe({role:'player',code:h.code,token:'invalid'},()=>{},()=>{}));
  for(const s of subs)s.close();sub.close();
 });
+
+test('transport : les coups attendent la fin de la transition partagée',async()=>{const {room,start}=await import('../engine.js');const g=room('654321','host-transition');g.players=[{id:'a',token:'token-a',name:'Alice',avatar:0,hand:[],score:0,online:true},{id:'b',token:'token-b',name:'Bob',avatar:1,hand:[],score:0,online:true}];start(g);g.turn=0;g.chooseColor=false;g.pending=0;g.challenge=null;g.transition={id:'event',type:'skip',until:Date.now()+5000};data.set('nova-host-'+g.code,JSON.stringify(g));const host=(await import('../public/transport.js?transition-host')).transport,guest=(await import('../public/transport.js?transition-guest')).transport;let hs;const h={code:g.code,token:g.host,role:'host'},sub=host.subscribe(h,s=>hs=s,()=>{});await new Promise(r=>setImmediate(r));const a=await guest.request('join',{room:g.code,token:'token-a'}),sa=guest.subscribe(a,()=>{},()=>{});await new Promise(r=>setImmediate(r));await assert.rejects(guest.request('action',{room:g.code,type:'draw'},a),/effet de carte/);const before=hs.deckCount,now=Date.now;try{Date.now=()=>now()+6000;await guest.request('action',{room:g.code,type:'draw'},a);}finally{Date.now=now;}await new Promise(r=>setImmediate(r));assert.equal(hs.deckCount,before-1);sa.close();sub.close();});

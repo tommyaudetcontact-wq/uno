@@ -1,4 +1,4 @@
-import {room,start,end,action,view,log} from './engine.js?v=18';
+import {room,start,end,action,view,log} from './engine.js?v=19';
 
 // Étoile WebRTC : l'écran partagé est l'autorité, chaque téléphone est un pair.
 // PeerServer Cloud ne transporte que la signalisation. Pas de backend applicatif.
@@ -15,7 +15,7 @@ function hostAction(token,a){if(!game||a.room!==game.code)throw Error('Partie in
   else if(a.type==='end'){if(token!==game.host)throw Error('Réservé à l’hôte.');end(game);}
   else if(a.type==='rules'){if(token!==game.host||game.status==='playing')throw Error('Réglages verrouillés.');for(const k of ['jump','stack','drawUntil','challenge'])game.rules[k]=!!a.rules?.[k];}
   else if(a.type==='remove'){if(token!==game.host||game.status==='playing')throw Error('Impossible maintenant.');let p=game.players.find(x=>x.id===a.player);if(p){clients.get(p.token)?.send({kind:'removed'});clients.get(p.token)?.close();clients.delete(p.token);}game.players=game.players.filter(x=>x.id!==a.player);}
-  else {let p=game.players.find(x=>x.token===token);if(!p)throw Error('Session invalide.');action(game,p,a);}
+  else {if(game.transition?.until>Date.now()&&['play','draw','pass','challenge'].includes(a.type))throw Error('Un instant : effet de carte en cours.');let p=game.players.find(x=>x.token===token);if(!p)throw Error('Session invalide.');action(game,p,a);}
   publish();return {ok:true};
 }
 function accept(c){let token=null,n=0,windowStart=Date.now();const authTimer=setTimeout(()=>{if(!token)c.close();},15000);
