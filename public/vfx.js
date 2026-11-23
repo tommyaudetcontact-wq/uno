@@ -1,4 +1,4 @@
-import {budget,quality} from './quality.js?v=19';
+import {budget,quality} from './quality.js?v=20';
 // Moteur de particules additif : sprites lumineux, traînées, vortex et ondes.
 // Un seul canvas et une seule boucle, arrêtée dès qu'aucun effet n'est actif.
 const palette={coral:'#ff635f',cyan:'#42d8f0',lime:'#c8fa69',violet:'#ae8aff',wild:'#d4b6ff'};
