@@ -85,3 +85,7 @@ Dans le menu hamburger, l’hôte peut terminer la partie : tous les appareils r
 ## Musique
 
 Arcade Rush et Quantum Dash, fichiers fournis par l’utilisateur, sont inclus dans `public/music/`. Le bouton ♬ ouvre le lecteur dans l’accueil et le salon; le menu hôte contient les mêmes commandes en partie. Lecture/pause, piste et volume sont réglables. Les deux morceaux s’enchaînent en boucle. La musique continue pendant les changements de vue, sur cet appareil uniquement; elle ne démarre pas automatiquement sur les téléphones. Le navigateur peut demander une première action sur Écouter.
+
+## Lisibilité du tour et des jokers
+
+Le téléphone du joueur actif affiche un cadre lumineux sur tout le contour et un bandeau « À TOI DE JOUER ! ». Le cadre reste visible pendant son tour puis disparaît; sa pulsation est désactivée si la réduction des animations est demandée. Les jokers posés prennent la couleur choisie, y compris dans la défausse. Un joker repris à la pioche redevient multicolore dans la main.

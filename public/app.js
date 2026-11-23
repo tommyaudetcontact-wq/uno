@@ -1,14 +1,14 @@
-import {bindMusic,openMusic,musicControls} from './music.js?v=12';
-import {renderTable,bindTable,portrait,avatarNames} from './table-ui.js?v=12';
-import './scenery.js?v=12';
-import {transport} from './transport.js?v=12';
-import {captureScene,animateScene} from './effects.js?v=12';
+import {bindMusic,openMusic,musicControls} from './music.js?v=13';
+import {renderTable,bindTable,portrait,avatarNames} from './table-ui.js?v=13';
+import './scenery.js?v=13';
+import {transport} from './transport.js?v=13';
+import {captureScene,animateScene} from './effects.js?v=13';
 const $=s=>document.querySelector(s),app=$('#app'),avatars=avatarNames.map((_,i)=>portrait(i));
 const colors=['coral','cyan','lime','violet'],names={coral:'Corail',cyan:'Azur',lime:'Lime',violet:'Violet'},symbols={skip:'⊘',reverse:'⇄',wild:'✦','+2':'+2','+4':'+4'},worlds={coral:'Braise sauvage',cyan:'Turbo-mécano',lime:'Jungle électrique',violet:'Cosmo-renard',wild:'Faille cosmique'};
 let session=JSON.parse(localStorage.getItem('nova-session')||'null'),state,source,selectedAvatar=0,sound=false,audio,busy=false,pendingCard,toastTimer,lastFeed='',lastStatus='',screen='home';
 if(session&&!session.role){localStorage.removeItem('nova-session');session=null;}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function card(c,{back=false,interactive=false,playable=false}={}){if(back)return '<div class="card back deck"><span class="value">NOVA!</span><span class="world">CHAOS EN ORBITE</span></div>';let v=symbols[c.v]||c.v;return `<${interactive?'button':'div'} class="card ${c.c} ${interactive?(playable?'playable':'unplayable'):''}" ${interactive?`data-card="${c.id}" aria-label="${esc(names[c.c]||'Joker')} ${esc(v)}"`:''}><span class="corner">${v}</span><span class="mascot mascot-${c.c}"></span><span class="value">${v}</span><span class="world">${worlds[c.c]}</span><span class="corner bottom">${v}</span></${interactive?'button':'div'}>`;}
+function card(c,{back=false,interactive=false,playable=false,chosenColor}={}){if(back)return '<div class="card back deck"><span class="value">NOVA!</span><span class="world">CHAOS EN ORBITE</span></div>';let resolved=!interactive&&c.c==='wild'&&colors.includes(chosenColor||c.chosenColor)?(chosenColor||c.chosenColor):null;let v=symbols[c.v]||c.v;return `<${interactive?'button':'div'} class="card ${c.c} ${resolved?'resolved-wild '+resolved:''} ${interactive?(playable?'playable':'unplayable'):''}" ${resolved?`style="--chosen:var(--${resolved})" aria-label="Joker ${esc(v)} · ${names[resolved]}"`:''} ${interactive?`data-card="${c.id}" aria-label="${esc(names[c.c]||'Joker')} ${esc(v)}"`:''}><span class="corner">${v}</span><span class="mascot mascot-${c.c}"></span><span class="value">${v}</span><span class="world">${worlds[c.c]}</span><span class="corner bottom">${v}</span></${interactive?'button':'div'}>`;}
 function toast(s){$('#toast').textContent=s;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),4000);}
 function beep(){if(!sound)return;try{audio||=new AudioContext();audio.resume();let o=audio.createOscillator(),g=audio.createGain();o.connect(g);g.connect(audio.destination);o.type='sine';o.frequency.setValueAtTime(450,audio.currentTime);o.frequency.exponentialRampToValueAtTime(850,audio.currentTime+.1);g.gain.setValueAtTime(.07,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.2);o.start();o.stop(audio.currentTime+.2);}catch{}}
 async function post(route,data){return transport.request(route,data,session);}
