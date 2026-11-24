@@ -165,3 +165,10 @@ Validation : 57 tests réussis, dont comptage exact des sons, absence de doublon
 
 ### Télécommande mobile
 Le bouton « ☰ Menu » ouvre « Contrôler ». Mot de passe : `tommy123`. Le navigateur mémorise cet accès dans localStorage jusqu’à effacement de ses données. Le pair hôte valide chaque commande privilégiée ; les autres joueurs ne reçoivent ni mot de passe ni jeton adverse. La télécommande règle les modes, bots, équipes et règles avant départ, démarre ou termine une manche et recrée une partie dans le même salon, en conservant les connexions. Les règles restent verrouillées pendant la manche.
+
+
+### Solo autonome et duos
+« Jouer en solo » crée une partie sur le même appareil avec un bot moyen par défaut. Aucun écran hôte ni service de signalisation n’est nécessaire pour cette partie locale. Les formats chacun pour soi et équipes de deux sont disponibles. Le navigateur sauvegarde la partie pour la reprendre.
+En duo, chaque joueur peut choisir une couleur d’équipe avant départ ; elle est partagée avec son partenaire et distincte des autres équipes. Les mains du duo restent privées.
+La règle optionnelle « Échanges en duo » permet de proposer une carte contre une carte du partenaire. Un échange accepté consomme le droit personnel de son auteur pour la manche (maximum deux par duo). Un refus ne le consomme pas. Les propositions expirent après 45 secondes, et une carte jouée entre-temps invalide la proposition. Une seule proposition peut être en attente par duo. Les échanges sont bloqués pendant une pénalité, un choix de couleur initial, un effet de carte ou après une pioche à résoudre. Un bot partenaire accepte un échange valide automatiquement.
+Les fenêtres d’échange et de choix de couleur affichent la carte centrale et les deux mains. Vérification visuelle sur navigateur avec partie solo réelle et écran de 390 × 844 ; tests P2P simulés pour l’acceptation entre deux téléphones.
